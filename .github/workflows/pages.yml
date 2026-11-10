@@ -31,7 +31,7 @@ jobs:
       - name: Stage site
         run: |
           mkdir -p _site
-          cp root/index.html _site/
+          cp root/index.html root/style.css _site/   # style.css: base stylesheet the survey links as ../style.css (same copy as on Netlify)
           cp -r music_EBT/demo/showcase/site/survey _site/survey
           echo "files: $(find _site -type f | wc -l)  size: $(du -sh _site | cut -f1)"
       - uses: actions/configure-pages@v5
