@@ -33,7 +33,7 @@ jobs:
           mkdir -p _site
           cp root/index.html _site/
           cp -r music_EBT/demo/showcase/site/survey _site/survey
-          rm -rf _site/survey/audio   # DIAGNOSTIC: does the deploy stall without the audio?
+          ls _site/survey/audio/*.mp3 | sort | tail -n +243 | xargs rm   # DIAGNOSTIC: first half of the audio only
           echo "files: $(find _site -type f | wc -l)  size: $(du -sh _site | cut -f1)"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
