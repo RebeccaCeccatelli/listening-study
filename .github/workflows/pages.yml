@@ -33,7 +33,6 @@ jobs:
           mkdir -p _site
           cp root/index.html _site/
           cp -r music_EBT/demo/showcase/site/survey _site/survey
-          ls _site/survey/audio/*.mp3 | sort | head -n 242 | xargs rm   # DIAGNOSTIC: second half of the audio only
           echo "files: $(find _site -type f | wc -l)  size: $(du -sh _site | cut -f1)"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
