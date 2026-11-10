@@ -28,11 +28,11 @@ jobs:
           repository: RebeccaCeccatelli/music_EBT
           path: music_EBT
           sparse-checkout: demo/showcase/site/survey
-      - name: Stage site
+      - name: Stage site (survey audio packed into ~1 MB chunks, see build.py)
         run: |
           mkdir -p _site
           cp root/index.html root/style.css _site/   # style.css: base stylesheet the survey links as ../style.css (same copy as on Netlify)
-          cp -r music_EBT/demo/showcase/site/survey _site/survey
+          python3 build.py music_EBT/demo/showcase/site/survey _site
           echo "files: $(find _site -type f | wc -l)  size: $(du -sh _site | cut -f1)"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
