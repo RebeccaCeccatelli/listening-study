@@ -53,11 +53,16 @@ def patch_js(path, rel):
     path.write_text(s.replace(old_fn, "  async function playCard(card, hash) {").replace(old_src, new_src))
 
 
-def patch_html(path, audio_rel):
+def patch_html(path, audio_rel, css_link, base_css):
     s = path.read_text()
     tag = '  <script src="survey.js"></script>'
     assert s.count(tag) == 1, path
-    path.write_text(s.replace(tag, (SHIM % audio_rel) + tag))
+    s = s.replace(tag, (SHIM % audio_rel) + tag)
+    # The base stylesheet (the showcase's style.css, as served next to the survey on Netlify) is inlined:
+    # deploys that carried it as a separate file stalled on GitHub Pages every time.
+    link = f'  <link rel="stylesheet" href="{css_link}">'
+    assert s.count(link) == 1, path
+    path.write_text(s.replace(link, "  <style>\n" + base_css + "\n  </style>"))
 
 
 def main(src, out):
@@ -83,8 +88,9 @@ def main(src, out):
         assert (dst / "audio" / f"pack-{c}.mp3").read_bytes()[at:at + ln] == f.read_bytes(), f
     patch_js(dst / "survey.js", "audio/")
     patch_js(dst / "it" / "survey.js", "../audio/")
-    patch_html(dst / "index.html", "audio/")
-    patch_html(dst / "it" / "index.html", "../audio/")
+    base_css = (Path(__file__).resolve().parent / "root" / "style.css").read_text()
+    patch_html(dst / "index.html", "audio/", "../style.css", base_css)
+    patch_html(dst / "it" / "index.html", "../audio/", "../../style.css", base_css)
     print(f"{len(mp3s)} clips -> {n + 1} chunks; files: {sum(1 for _ in out.rglob('*') if _.is_file())}")
 
 

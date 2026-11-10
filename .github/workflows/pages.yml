@@ -31,7 +31,7 @@ jobs:
       - name: Stage site (survey audio packed into ~1 MB chunks, see build.py)
         run: |
           mkdir -p _site
-          cp root/index.html _site/   # DIAGNOSTIC (no style.css)   # style.css: base stylesheet the survey links as ../style.css (same copy as on Netlify)
+          cp root/index.html _site/   # root/style.css is inlined into the survey pages by build.py
           python3 build.py music_EBT/demo/showcase/site/survey _site
           echo "files: $(find _site -type f | wc -l)  size: $(du -sh _site | cut -f1)"
       - uses: actions/configure-pages@v5
