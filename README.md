@@ -1,6 +1,7 @@
 # Listening Study
 
-Blind listening survey of the music-EBT Master's thesis (English and Italian).
+Blind listening survey of the Master's thesis on Tonic, an Energy-Based Transformer for symbolic music (English and Italian).
+Results and everything else about Tonic: https://rebeccaceccatelli.github.io/tonic/
 
 Live: https://rebeccaceccatelli.github.io/listening-study/survey/ (Italian: `/survey/it/`)
 
